@@ -15,6 +15,8 @@ import java.util.List;
 public interface UserDAOInter {
 
     public List<User> getAll();
+    
+    public User getById(int i);
 
     public boolean updateUser(User u);
 

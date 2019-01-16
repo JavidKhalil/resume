@@ -3,6 +3,9 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
+
+//DAO data access object demekdir 
+//birbawa dataya muraciet etmek ucun istifade etdiyimiz object 
 package com.mycompany.DAO.impl;
 
 import com.mycompany.main.DAO.inter.AbstractDAO;
@@ -82,5 +85,27 @@ public class UserDAOImpl extends AbstractDAO implements UserDAOInter {
         }
 
     }
+
+    @Override
+    public User getById(int userId) {
+        User result = null;
+        try (Connection conn = connect()) {
+            Statement stmt = conn.createStatement();
+            stmt.execute("select * from user where id = " + userId);
+            ResultSet rs = stmt.getResultSet();
+
+            while (rs.next()) {
+                int id = rs.getInt("id");
+                String name = rs.getString("name");
+                String surname = rs.getString("surname");
+                String phone = rs.getString("phone");
+                String email = rs.getString("email");
+                result = new User(id, name, surname, phone, email);
+            }
+        } catch (Exception ex) {
+            ex.getMessage();
+        }
+        return result;
+     }
 
 }
